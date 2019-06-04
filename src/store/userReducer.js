@@ -26,7 +26,7 @@ const user = (state = initialState, action) => {
       };
 
     case at.FETCH_USER_ERROR:
-      return { ...state, isError: true };
+      return { ...initialState, isError: true };
 
     case at.LOGOUT:
       return initialState;
