@@ -4,9 +4,9 @@ const fetchUser = userId => {
   return fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
 };
 
-const fetchUserRequest = () => ({ type: at.FETCH_PROFILE_REQUEST });
-const fetchUserSuccess = user => ({ type: at.FETCH_PROFILE_SUCCESS, user });
-const fetchUserError = () => ({ type: at.FETCH_PROFILE_ERROR });
+const fetchUserRequest = () => ({ type: at.FETCH_USER_REQUEST });
+const fetchUserSuccess = user => ({ type: at.FETCH_USER_SUCCESS, user });
+const fetchUserError = () => ({ type: at.FETCH_USER_ERROR });
 
 // I need the thunk to be able to return a function
 export const login = userId => {

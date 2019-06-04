@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { toggleTheme } from "./store/uiActions";
-import { login, logout } from "./store/profileActions";
+import { login, logout } from "./store/userActions";
 
 const MainComp = ({
   theme,
@@ -53,10 +53,10 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     theme: state.ui.theme,
-    themeUpdatedAt: state.profile.themeUpdatedAt,
-    isLoggedIn: state.profile.isLoggedIn,
-    isLoading: state.profile.isLoading,
-    user: state.profile.user
+    themeUpdatedAt: state.user.themeUpdatedAt,
+    isLoggedIn: state.user.isLoggedIn,
+    isLoading: state.user.isLoading,
+    user: state.user.user
   };
 };
 
