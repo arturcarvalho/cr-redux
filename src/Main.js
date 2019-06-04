@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { toggleTheme } from "./store/uiActions";
-import { login, logout } from "./store/userActions";
+import { login, logout, fetchFriends } from "./store/userActions";
+import { getThemeUpdatedAt } from "./store/rootReducer";
 
 const MainComp = ({
   theme,
@@ -11,10 +12,12 @@ const MainComp = ({
   isLoading,
   isError,
   user,
+  friends,
 
   toggleTheme,
   login,
-  logout
+  logout,
+  fetchFriends
 }) => {
   // The number has 25% chance of being a bad one. (-1 id doesn't exist)
   const ids = [1, 1, 1, -1];
@@ -33,10 +36,20 @@ const MainComp = ({
 
       <div>
         <em>Theme updated at:</em>
-        <span> {themeUpdatedAt.toISOString()}</span>
+        <span> {themeUpdatedAt}</span>
       </div>
       <button onClick={toggleTheme}>Toggle Theme</button>
       <hr />
+
+      <div>
+        <p>Friends:</p>
+        <button onClick={fetchFriends}>Fetch friends</button>
+        {friends.map((name, idx) => (
+          <p key={idx}>Friend: {name}</p>
+        ))}
+      </div>
+      <hr />
+
       <div>
         <button onClick={logAction}>{isLoggedIn ? "Logout" : "Login"}</button>
 
@@ -60,11 +73,12 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     theme: state.ui.theme,
-    themeUpdatedAt: state.user.themeUpdatedAt,
+    themeUpdatedAt: getThemeUpdatedAt(state),
     isLoggedIn: state.user.isLoggedIn,
     isLoading: state.user.isLoading,
     isError: state.user.isError,
-    user: state.user.user
+    user: state.user.user,
+    friends: state.user.friends
   };
 };
 
@@ -72,17 +86,23 @@ const mapStateToProps = (state, ownProps) => {
 // export default connect(...)(MainComp);
 
 // named export
-// export const Main = connect(
-//   mapStateToProps,
-//   { toggleTheme }
-// )(MainComp);
-
-// named export
 export const Main = connect(
   mapStateToProps,
-  dispatch => ({
-    login: userId => dispatch(login(userId)),
-    logout: () => dispatch(logout()),
-    toggleTheme: () => dispatch(toggleTheme())
-  })
+  {
+    login,
+    logout,
+    toggleTheme,
+    fetchFriends
+  }
 )(MainComp);
+
+// named export with "extended" actions
+// export const Main = connect(
+//   mapStateToProps,
+//   dispatch => ({
+//     login: userId => dispatch(login(userId)),
+//     logout: () => dispatch(logout()),
+//     toggleTheme: () => dispatch(toggleTheme()),
+//     fetchFriends: () => dispatch(fetchFriends())
+//   })
+// )(MainComp);

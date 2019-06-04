@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import ui from "./uiReducer";
-import user from "./userReducer";
+import user, * as fromUser from "./userReducer";
 
 const rootReducer = combineReducers({
   ui,
@@ -11,4 +11,4 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 // PUBLIC SELECTORS
-// TODO
+export const getThemeUpdatedAt = state => fromUser.getThemeUpdatedAt(state);

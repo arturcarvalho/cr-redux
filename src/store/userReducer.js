@@ -5,7 +5,8 @@ const initialState = {
   isLoggedIn: false,
   user: {},
   isLoading: false,
-  isError: false
+  isError: false,
+  friends: []
 };
 
 const user = (state = initialState, action) => {
@@ -28,6 +29,9 @@ const user = (state = initialState, action) => {
     case at.FETCH_USER_ERROR:
       return { ...initialState, isError: true };
 
+    case at.FETCH_FRIENDS_SUCCESS:
+      return { ...initialState, friends: action.friends };
+
     case at.LOGOUT:
       return initialState;
     default:
@@ -36,3 +40,9 @@ const user = (state = initialState, action) => {
 };
 
 export default user;
+
+//PRIVATE SELECTORS
+
+export const getThemeUpdatedAt = state => {
+  return state.user.themeUpdatedAt.toLocaleString();
+};
